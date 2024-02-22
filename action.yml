@@ -1,0 +1,53 @@
+name: "Mayhem for Code"
+description: "Automatically test your binary targets with Mayhem"
+author: "ForAllSecure"
+inputs:
+  mayhem-token:
+    description: Personal API token for authenticating to Mayhem (only required when using a custom mayhem-url)
+    required: false
+  mayhem-url:
+    description: URL pointing to your Mayhem instance
+    required: false
+  owner:
+    description: Sets the owner of the project (workspace or account name).
+    required: false
+    default: ${{ github.repository_owner }}
+  project:
+    description: Sets the name of the project. Defaults to the name of your repository if not defined.
+    required: false
+  github-token:
+    description: GitHub token for posting feedback
+    required: false
+    default: ${{ github.token }}
+  sarif-output:
+    description: SARIF output path (must be a directory, doesn't have to exist yet). You can upload to to GitHub using the 'github/codeql-action/upload-sarif@v1' action
+    required: false
+  junit-output:
+    description: JUnit output path (must be a directory, doesn't have to exist yet). You can upload the artifact to GitHub using the 'actions/upload-artifact' action
+    required: false
+  coverage-output:
+    description: Coverage report output path (must be a directory, doesn't have to exist yet). You can upload the artifacts to GitHub using the 'actions/upload-artifact' action
+    required: false
+  fail-on-defects:
+    description: Should we fail the workflow upon detecting a defect?
+    required: false
+    default: "false"
+  verbosity:
+    description: Verbosity level for starting runs
+    required: false
+  package:
+    description: Path to the Mayhem package relative to the repository root
+    required: false
+    default: "."
+  args:
+    description: Command line arguments to override CLI behavior
+    required: false
+runs:
+  using: "node16"
+  main: "dist/index.js"
+outputs:
+  runId:
+    description: The identifier of the run that this action triggered in Mayhem
+branding:
+  icon: "shield"
+  color: "red"
